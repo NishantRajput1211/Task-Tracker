@@ -7,18 +7,29 @@ import API from "../services/api";
 
 import Navbar from "../components/Navbar";
 
+import "./Dashboard.css";
+
 function Dashboard() {
 
   const [tasks, setTasks] =
     useState([]);
 
+  // FETCH TASKS
   const fetchTasks =
     async () => {
 
-      const res =
-        await API.get("/tasks");
+      try {
 
-      setTasks(res.data);
+        const res =
+          await API.get("/tasks");
+
+        setTasks(res.data);
+
+      } catch (err) {
+
+        console.log(err);
+
+      }
 
     };
 
@@ -28,6 +39,7 @@ function Dashboard() {
 
   }, []);
 
+  // STATS
   const total =
     tasks.length;
 
@@ -55,40 +67,53 @@ function Dashboard() {
 
       <Navbar />
 
-      <div
-        style={{
-          padding: "20px"
-        }}
-      >
+      <div className="dashboard-container">
 
-        <h1>
+        <h1 className="dashboard-title">
           Dashboard
         </h1>
 
-        <h2>
-          Total Tasks:
-          {" "}
-          {total}
-        </h2>
+        <div className="stats-grid">
 
-        <h2>
-          Completed Tasks:
-          {" "}
-          {completed}
-        </h2>
+          {/* TOTAL TASKS */}
+          <div className="stat-card total">
 
-        <h2>
-          Overdue Tasks:
-          {" "}
-          {overdue}
-        </h2>
+            <h2>Total Tasks</h2>
+
+            <div className="stat-number">
+              {total}
+            </div>
+
+          </div>
+
+          {/* COMPLETED TASKS */}
+          <div className="stat-card completed">
+
+            <h2>Completed Tasks</h2>
+
+            <div className="stat-number">
+              {completed}
+            </div>
+
+          </div>
+
+          {/* OVERDUE TASKS */}
+          <div className="stat-card overdue">
+
+            <h2>Overdue Tasks</h2>
+
+            <div className="stat-number">
+              {overdue}
+            </div>
+
+          </div>
+
+        </div>
 
       </div>
 
     </div>
-
   );
-
 }
 
 export default Dashboard;

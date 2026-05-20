@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import API from "../services/api";
-import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -16,55 +16,59 @@ function Login() {
       });
 
       localStorage.setItem("token", res.data.token);
-      
 
       alert("Login successful");
 
       navigate("/dashboard");
 
     } catch (error) {
-      alert("Login failed");
-      console.log(error);
+      console.log(error.response.data);
+      alert(error.response.data.message || "Something went wrong");
     }
   };
 
   return (
-    <div>
-  
-      <h2>Login</h2>
-  
-      <input
-        type="email"
-        placeholder="Enter email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-  
-      <br /><br />
-  
-      <input
-        type="password"
-        placeholder="Enter password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-  
-      <br /><br />
-  
-      <button onClick={handleLogin}>
-        Login
-      </button>
-  
-      <br /><br />
-  
-      <Link to="/register">
-        Go to Register
-      </Link>
-  
-      <br /><br />
-  
-      <Link to="/forgot-password">
-        Forgot Password?
-      </Link>
-  
+    <div className="login-container">
+
+      <div className="login-box">
+
+        <h2 className="login-title">Login</h2>
+
+        <input
+          type="email"
+          placeholder="Enter email"
+          className="login-input"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <input
+          type="password"
+          placeholder="Enter password"
+          className="login-input"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button
+          className="login-button"
+          onClick={handleLogin}
+        >
+          Login
+        </button>
+
+        <div className="login-links">
+
+          <Link to="/register">
+            Go to Register
+          </Link>
+
+          <Link to="/forgot-password">
+            Forgot Password?
+          </Link>
+
+        </div>
+
+      </div>
+
     </div>
   );
 }

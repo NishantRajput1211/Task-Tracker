@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
-
+import "./Register.css";
 function Register() {
 
   const [name, setName] =
@@ -42,7 +42,7 @@ function Register() {
 
     } catch (error) {
 
-      console.log(error);
+      console.log(error.response);
     
       if (error.response) {
     
@@ -64,51 +64,63 @@ function Register() {
 
   return (
 
-    <div>
-
-      <h2>Register</h2>
-
-      <input
-        type="text"
-        placeholder="Enter name"
-        value={name}
-        onChange={(e) =>
-          setName(e.target.value)
-        }
-      />
-
-      <br /><br />
-
-      <input
-        type="email"
-        placeholder="Enter email"
-        value={email}
-        onChange={(e) =>
-          setEmail(e.target.value)
-        }
-      />
-
-      <br /><br />
-
-      <input
-        type="password"
-        placeholder="Enter password"
-        value={password}
-        onChange={(e) =>
-          setPassword(e.target.value)
-        }
-      />
-
-      <br /><br />
-
-      <button onClick={handleRegister}>
-        Register
-      </button>
-
+    <div className="register-container">
+  
+      <div className="register-card">
+  
+        <h2>Create Account</h2>
+  
+        <p className="subtitle">
+          Register to manage your tasks
+        </p>
+  
+        <div className="register-form">
+  
+          <input
+            type="text"
+            placeholder="Enter name"
+            value={name}
+            onChange={(e) =>
+              setName(e.target.value)
+            }
+          />
+  
+          <input
+            type="email"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
+          />
+  
+          <input
+            type="password"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
+          />
+  
+          <button onClick={handleRegister}>
+            Register
+          </button>
+  
+        </div>
+  
+        <p className="login-link">
+          Already have an account?
+          <span onClick={() => navigate("/")}>
+            Login
+          </span>
+        </p>
+  
+      </div>
+  
     </div>
-
+  
   );
-
 }
 
 export default Register;

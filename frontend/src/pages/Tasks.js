@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
 import Navbar from "../components/Navbar";
-import "../styles/tasks.css";
 import React, { useState, useEffect } from "react";
 import API from "../services/api";
+import "./Tasks.css";
 
 function Tasks() {
 
@@ -77,17 +77,14 @@ function Tasks() {
 
       if (editId) {
 
-        await API.put(
-          `/tasks/${editId}`,
-          {
-            title,
-            status,
-            priority,
-            dueDate,
-            project,
-            assignedTo
-          }
-        );
+        await API.put(`/tasks/${editId}`, {
+          title,
+          status,
+          priority,
+          dueDate,
+          project,
+          assignedTo
+        });
 
         toast.success("Task Updated");
 
@@ -95,17 +92,14 @@ function Tasks() {
 
       } else {
 
-        await API.post(
-          "/tasks",
-          {
-            title,
-            status,
-            priority,
-            dueDate,
-            project,
-            assignedTo
-          }
-        );
+        await API.post("/tasks", {
+          title,
+          status,
+          priority,
+          dueDate,
+          project,
+          assignedTo
+        });
 
         toast.success("Task Created");
 
@@ -178,254 +172,273 @@ function Tasks() {
 
   return (
 
-    <div className="container">
+    <div>
 
       <Navbar />
 
-      <h1 className="heading">
-        Tasks
-      </h1>
+      <div className="tasks-container">
 
-      {/* SEARCH */}
-      <input
-        className="input"
-        type="text"
-        placeholder="Search tasks"
-        value={search}
-        onChange={(e) =>
-          setSearch(e.target.value)
-        }
-      />
+        <h1 className="tasks-title">
+          Task Manager
+        </h1>
 
-      {/* FILTER */}
-      <select
-        className="select"
-        value={filterStatus}
-        onChange={(e) =>
-          setFilterStatus(e.target.value)
-        }
-      >
+        {/* FORM */}
+        <div className="task-form">
 
-        <option>All</option>
-        <option>Todo</option>
-        <option>In Progress</option>
-        <option>Done</option>
+          {/* SEARCH */}
+          <input
+            className="input"
+            type="text"
+            placeholder="Search tasks..."
+            value={search}
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
+          />
 
-      </select>
-
-      {/* TITLE */}
-      <input
-        className="input"
-        placeholder="Task title"
-        value={title}
-        onChange={(e) =>
-          setTitle(e.target.value)
-        }
-      />
-
-      {/* STATUS */}
-      <select
-        className="select"
-        value={status}
-        onChange={(e) =>
-          setStatus(e.target.value)
-        }
-      >
-
-        <option>Todo</option>
-        <option>In Progress</option>
-        <option>Done</option>
-
-      </select>
-
-      {/* PRIORITY */}
-      <select
-        className="select"
-        value={priority}
-        onChange={(e) =>
-          setPriority(e.target.value)
-        }
-      >
-
-        <option>Low</option>
-        <option>Medium</option>
-        <option>High</option>
-
-      </select>
-
-      {/* DUE DATE */}
-      <input
-        className="input"
-        type="date"
-        value={dueDate}
-        onChange={(e) =>
-          setDueDate(e.target.value)
-        }
-      />
-
-      {/* PROJECT */}
-      <select
-        className="select"
-        value={project}
-        onChange={(e) =>
-          setProject(e.target.value)
-        }
-      >
-
-        <option value="">
-          Select Project
-        </option>
-
-        {projects.map((p) => (
-
-          <option
-            key={p._id}
-            value={p._id}
+          {/* FILTER */}
+          <select
+            className="select"
+            value={filterStatus}
+            onChange={(e) =>
+              setFilterStatus(e.target.value)
+            }
           >
-            {p.name}
-          </option>
 
-        ))}
+            <option>All</option>
+            <option>Todo</option>
+            <option>In Progress</option>
+            <option>Done</option>
 
-      </select>
+          </select>
 
-      {/* ASSIGN USER */}
-      <select
-        className="select"
-        value={assignedTo}
-        onChange={(e) =>
-          setAssignedTo(e.target.value)
-        }
-      >
+          {/* TITLE */}
+          <input
+            className="input"
+            placeholder="Task title"
+            value={title}
+            onChange={(e) =>
+              setTitle(e.target.value)
+            }
+          />
 
-        <option value="">
-          Assign User
-        </option>
-
-        {users.map((u) => (
-
-          <option
-            key={u._id}
-            value={u._id}
+          {/* STATUS */}
+          <select
+            className="select"
+            value={status}
+            onChange={(e) =>
+              setStatus(e.target.value)
+            }
           >
-            {u.name}
-          </option>
 
-        ))}
+            <option>Todo</option>
+            <option>In Progress</option>
+            <option>Done</option>
 
-      </select>
+          </select>
 
-      {/* BUTTON */}
-      <button
-        className="button"
-        onClick={createTask}
-      >
-
-        {editId
-          ? "Update Task"
-          : "Create Task"}
-
-      </button>
-
-      <hr />
-
-      {/* TASK LIST */}
-      {filteredTasks.map((task) => (
-
-        <div
-          key={task._id}
-          className="task-card"
-        >
-
-          <h3>{task.title}</h3>
-
-          <p>
-            Status: {task.status}
-          </p>
-
-          <p>
-            Priority: {task.priority}
-          </p>
-
-          <p>
-            Project:
-            {" "}
-            {
-              task.project
-                ? task.project.name
-                : "No Project"
+          {/* PRIORITY */}
+          <select
+            className="select"
+            value={priority}
+            onChange={(e) =>
+              setPriority(e.target.value)
             }
-          </p>
+          >
 
-          <p>
-            Assigned To:
-            {" "}
-            {
-              task.assignedTo
-                ? task.assignedTo.name
-                : "Nobody"
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+
+          </select>
+
+          {/* DUE DATE */}
+          <input
+            className="input"
+            type="date"
+            value={dueDate}
+            onChange={(e) =>
+              setDueDate(e.target.value)
             }
-          </p>
+          />
 
-          <p>
-            Due Date:
-            {" "}
-            {
-              task.dueDate
-                ? new Date(
-                    task.dueDate
-                  ).toLocaleDateString()
-                : "No date"
+          {/* PROJECT */}
+          <select
+            className="select"
+            value={project}
+            onChange={(e) =>
+              setProject(e.target.value)
             }
-          </p>
+          >
 
-          {/* EDIT */}
+            <option value="">
+              Select Project
+            </option>
+
+            {projects.map((p) => (
+
+              <option
+                key={p._id}
+                value={p._id}
+              >
+                {p.name}
+              </option>
+
+            ))}
+
+          </select>
+
+          {/* ASSIGN USER */}
+          <select
+            className="select"
+            value={assignedTo}
+            onChange={(e) =>
+              setAssignedTo(e.target.value)
+            }
+          >
+
+            <option value="">
+              Assign User
+            </option>
+
+            {users.map((u) => (
+
+              <option
+                key={u._id}
+                value={u._id}
+              >
+                {u.name}
+              </option>
+
+            ))}
+
+          </select>
+
+          {/* BUTTON */}
           <button
-            className="button"
-            onClick={() => {
-
-              setTitle(task.title);
-
-              setStatus(task.status);
-
-              setPriority(task.priority);
-
-              setDueDate(task.dueDate);
-
-              setProject(
-                task.project
-                  ? task.project._id
-                  : ""
-              );
-
-              setAssignedTo(
-                task.assignedTo
-                  ? task.assignedTo._id
-                  : ""
-              );
-
-              setEditId(task._id);
-
-            }}
+            className="create-btn"
+            onClick={createTask}
           >
-            Edit
-          </button>
 
-          {" "}
-
-          {/* DELETE */}
-          <button
-            className="button"
-            onClick={() =>
-              deleteTask(task._id)
+            {
+              editId
+                ? "Update Task"
+                : "Create Task"
             }
-          >
-            Delete
+
           </button>
 
         </div>
 
-      ))}
+        {/* TASK LIST */}
+        <div className="tasks-grid">
+
+          {filteredTasks.map((task) => (
+
+            <div
+              key={task._id}
+              className="task-card"
+            >
+
+              <h3>{task.title}</h3>
+
+              <p>
+                <strong>Status:</strong>
+                {" "}
+                {task.status}
+              </p>
+
+              <p>
+                <strong>Priority:</strong>
+                {" "}
+                {task.priority}
+              </p>
+
+              <p>
+                <strong>Project:</strong>
+                {" "}
+                {
+                  task.project
+                    ? task.project.name
+                    : "No Project"
+                }
+              </p>
+
+              <p>
+                <strong>Assigned To:</strong>
+                {" "}
+                {
+                  task.assignedTo
+                    ? task.assignedTo.name
+                    : "Nobody"
+                }
+              </p>
+
+              <p>
+                <strong>Due Date:</strong>
+                {" "}
+                {
+                  task.dueDate
+                    ? new Date(
+                        task.dueDate
+                      ).toLocaleDateString()
+                    : "No date"
+                }
+              </p>
+
+              <div className="task-buttons">
+
+                {/* EDIT */}
+                <button
+                  className="edit-btn"
+                  onClick={() => {
+
+                    setTitle(task.title);
+
+                    setStatus(task.status);
+
+                    setPriority(task.priority);
+
+                    setDueDate(task.dueDate);
+
+                    setProject(
+                      task.project
+                        ? task.project._id
+                        : ""
+                    );
+
+                    setAssignedTo(
+                      task.assignedTo
+                        ? task.assignedTo._id
+                        : ""
+                    );
+
+                    setEditId(task._id);
+
+                  }}
+                >
+                  Edit
+                </button>
+
+                {/* DELETE */}
+                <button
+                  className="delete-btn"
+                  onClick={() =>
+                    deleteTask(task._id)
+                  }
+                >
+                  Delete
+                </button>
+
+              </div>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      </div>
 
     </div>
   );

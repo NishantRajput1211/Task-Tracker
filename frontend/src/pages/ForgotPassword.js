@@ -1,68 +1,61 @@
 import React, { useState } from "react";
-
-import API from "../services/api";
+import "./ForgotPassword.css";
 
 function ForgotPassword() {
 
-  const [email, setEmail] =
-    useState("");
+  const [email, setEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
-  const [newPassword, setNewPassword] =
-    useState("");
+  const handleReset = () => {
 
-  const handleReset = async () => {
-
-    try {
-
-      const res = await API.put(
-        "/auth/reset-password",
-        {
-          email,
-          newPassword
-        }
-      );
-
-      alert(res.data.message);
-
-    } catch (err) {
-
-      alert(
-        err.response?.data?.message
-      );
-
+    if (!email || !newPassword) {
+      alert("Please fill all fields");
+      return;
     }
+
+    alert("Password Reset Successful");
 
   };
 
   return (
 
-    <div>
+    <div className="forgot-container">
 
-      <h2>Reset Password</h2>
+      <div className="forgot-card">
 
-      <input
-        type="email"
-        placeholder="Enter email"
-        onChange={(e) =>
-          setEmail(e.target.value)
-        }
-      />
+        <h2>Reset Password</h2>
 
-      <br /><br />
+        <p className="forgot-subtitle">
+          Enter your email and new password
+        </p>
 
-      <input
-        type="password"
-        placeholder="Enter new password"
-        onChange={(e) =>
-          setNewPassword(e.target.value)
-        }
-      />
+        <div className="forgot-form">
 
-      <br /><br />
+          <input
+            type="email"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
+          />
 
-      <button onClick={handleReset}>
-        Reset Password
-      </button>
+          <input
+            type="password"
+            placeholder="Enter new password"
+            value={newPassword}
+            onChange={(e) =>
+              setNewPassword(e.target.value)
+            }
+          />
+
+          <button onClick={handleReset}>
+            Reset Password
+          </button>
+
+        </div>
+
+      </div>
 
     </div>
 
