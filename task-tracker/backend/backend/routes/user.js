@@ -5,7 +5,7 @@ const router = express.Router();
 const User = require("../models/user");
 
 
-// GET all users
+// GET USERS
 router.get("/", async (req, res) => {
 
   try {
@@ -25,13 +25,15 @@ router.get("/", async (req, res) => {
 });
 
 
-// DELETE user
+// DELETE USER
 router.delete("/:id", async (req, res) => {
 
   try {
 
     const deletedUser =
-      await User.findByIdAndDelete(req.params.id);
+      await User.findByIdAndDelete(
+        req.params.id
+      );
 
     if (!deletedUser) {
 
@@ -54,6 +56,5 @@ router.delete("/:id", async (req, res) => {
   }
 
 });
-
 
 module.exports = router;
