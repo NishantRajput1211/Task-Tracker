@@ -143,6 +143,28 @@ function Tasks() {
     }
   };
 
+  // DELETE USER
+  const deleteUser = async (id) => {
+
+    try {
+
+      await API.delete(`/users/${id}`);
+
+      setUsers(
+        users.filter((u) => u._id !== id)
+      );
+
+      toast.success("User Deleted");
+
+    } catch (err) {
+
+      console.log(err);
+
+      toast.error("Delete failed");
+
+    }
+  };
+
   // LOAD DATA
   useEffect(() => {
 
@@ -314,7 +336,7 @@ function Tasks() {
 
           </select>
 
-          {/* BUTTON */}
+          {/* CREATE BUTTON */}
           <button
             className="create-btn"
             onClick={createTask}
@@ -327,6 +349,57 @@ function Tasks() {
             }
 
           </button>
+
+        </div>
+
+        {/* MANAGE USERS */}
+        <div
+          style={{
+            background: "white",
+            padding: "20px",
+            borderRadius: "10px",
+            marginBottom: "30px"
+          }}
+        >
+
+          <h2>Manage Users</h2>
+
+          {users.map((u) => (
+
+            <div
+              key={u._id}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "10px",
+                padding: "10px",
+                background: "#f4f4f4",
+                borderRadius: "8px"
+              }}
+            >
+
+              <span>{u.name}</span>
+
+              <button
+                onClick={() =>
+                  deleteUser(u._id)
+                }
+                style={{
+                  background: "red",
+                  color: "white",
+                  border: "none",
+                  padding: "8px 12px",
+                  borderRadius: "5px",
+                  cursor: "pointer"
+                }}
+              >
+                Delete
+              </button>
+
+            </div>
+
+          ))}
 
         </div>
 
