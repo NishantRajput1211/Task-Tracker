@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://team-task-tracker-jwcz.onrender.com/api",
+  baseURL: "https://team-task-tracker-agwp.onrender.com/api",
 });
 
 API.interceptors.request.use((req) => {
